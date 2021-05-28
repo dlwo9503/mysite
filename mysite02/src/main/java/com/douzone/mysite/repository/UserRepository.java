@@ -68,7 +68,7 @@ public class UserRepository {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Long no = rs.getLong(1);
-				String name = rs.getString(1);
+				String name = rs.getString(2);
 				
 				result = new UserVo();
 				result.setNo(no);
