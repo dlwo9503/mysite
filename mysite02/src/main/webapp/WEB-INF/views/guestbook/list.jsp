@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%@page import="com.douzone.mysite.vo.GuestbookVo"%>
 <%@page import="java.util.List"%>
 <%@page import="com.douzone.mysite.repository.GuestbookRepository"%>
@@ -6,25 +10,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
-Date date = new Date();
-SimpleDateFormat transFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-String regDate = transFormat.format(date);
+pageContext.setAttribute("newline", "\n");
 %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=request.getContextPath() %>/assets/css/main.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/main.css"
+	rel="stylesheet" type="text/css">
 <title>방명록</title>
 </head>
 <body>
 
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<form action="<%=request.getContextPath()%>/guestbook"
+					<form action="${pageContext.request.contextPath }/guestbook"
 						method="post">
 						<input type="hidden" name="a" value="add">
 						<table border=1 width=500>
@@ -44,34 +46,39 @@ String regDate = transFormat.format(date);
 					</form>
 					<br>
 
-					<%
-					int count = list.size();
-					int index = 0;
-					for (GuestbookVo vo : list) {
-					%>
+					<c:set var="index" value="0" />
+					<c:set var="count" value="${fn:length(list) }"/>
+					<c:forEach items="${list }" var="vo" varStatus="status">
 					<table width=510 border=1>
 						<tr>
-							<td>[<%=count - index++%>]
-							</td>
-							<td><%=vo.getName()%></td>
-							<td><%=vo.getRegDate()%></td>
+							<td>[${count - status.index }]</td>
+							<!--  -->
+							<td>${vo.name }</td>
+							<td>${vo.regDate }</td>
 							<td><a
-								href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
+								href="${pageContext.request.contextPath }/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
 						</tr>
 						<tr>
-							<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>")%></td>
+							<td colspan=4>${fn:replace(vo.message, newline, "<br/>") }</td>
 						</tr>
 					</table>
-					<%
-					}
-					%>
+		</c:forEach>
+					<table border="1" cellspacing="0" cellpadding="5">
+						<c:forEach begin="1" end="${row }" step="1" var="r">
+							<!-- 0 ~ 9 까지 var값 step만큼 증가시키면서 반복 -->
+							<tr>
+								<c:forEach begin="1" end="${col }" step="1" var="c">
+									<td>cell(${r }, ${c })</td>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+					</table>
 				</div>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
-
 </body>
 </html>
 

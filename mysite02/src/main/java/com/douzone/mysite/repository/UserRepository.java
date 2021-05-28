@@ -93,7 +93,50 @@ public class UserRepository {
 		}	
 		
 		return result;
-	}	
+	}
+	
+	public UserVo findByNo(Long userNo) { // update문
+		UserVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			
+			String sql =
+					"select no, name from user where no=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(1, userNo);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Long no = rs.getLong(1);
+				
+				result = new UserVo();
+				result.setNo(no);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					pstmt.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		
+		return result;
+	}
 	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
@@ -106,4 +149,5 @@ public class UserRepository {
 		} 
 		return conn;
 	}
+
 }
