@@ -17,7 +17,7 @@
 					<input id="name" name="name" type="text" value="">
 
 					<label class="block-label" for="email">이메일</label>
-					<input id="email" name="email" type="text" value="">
+					<input id="email" name="email" type="text" value="<%=request.getAttribute("email") == null ? "":request.getAttribute("email")  %>">
 					<input type="button" value="중복체크">
 					
 					<label class="block-label">패스워드</label>
