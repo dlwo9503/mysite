@@ -105,7 +105,7 @@ public class UserRepository {
 			conn = getConnection();
 			
 			String sql =
-					"select no, name from user where no=?";
+					"select no, name, email, gender from user where no=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(1, userNo);
@@ -113,9 +113,15 @@ public class UserRepository {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String gender = rs.getString(4);
 				
 				result = new UserVo();
 				result.setNo(no);
+				result.setName(name);
+				result.setEmail(email);
+				result.setGender(gender);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -136,6 +142,45 @@ public class UserRepository {
 		}	
 		
 		return result;
+	}
+	
+public Boolean update(UserVo vo) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "update user set name = ?, password = ?, gender =? where no =?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setLong(4, vo.getNo());
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+		
 	}
 	
 	private Connection getConnection() throws SQLException {
