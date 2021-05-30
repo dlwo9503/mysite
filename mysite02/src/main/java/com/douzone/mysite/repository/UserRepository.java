@@ -18,14 +18,14 @@ public class UserRepository {
 			conn = getConnection();
 			
 			String sql = "insert into user values(null, ?, ?, ?, ?)";
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql); // 명령 문장, 연결을 한 후 질의수행을 하기위함
 			
-			pstmt.setString(1, vo.getName());
+			pstmt.setString(1, vo.getName()); // 바인딩
 			pstmt.setString(2, vo.getEmail());
 			pstmt.setString(3, vo.getPassword());
 			pstmt.setString(4, vo.getGender());
 			
-			int count = pstmt.executeUpdate();
+			int count = pstmt.executeUpdate(); // 질의 수행, insert문이니 executeUpdate
 			result = count == 1;
 			
 		} catch (SQLException e) {
@@ -181,9 +181,9 @@ public Boolean update(UserVo vo) {
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mysql://192.168.254.31:3307/webdb?characterEncoding=utf8";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
+			Class.forName("org.mariadb.jdbc.Driver"); // 드라이버 로
+			String url = "jdbc:mysql://192.168.254.31:3307/webdb?characterEncoding=utf8"; // url 정의
+			conn = DriverManager.getConnection(url, "webdb", "webdb"); // Connection 얻기
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
 		} 
