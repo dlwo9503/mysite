@@ -17,10 +17,7 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 			
-			String sql =
-					" insert" +
-					"   into user" +
-					" values(null, ?, ?, ?, ?)";
+			String sql = "insert into user values(null, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, vo.getName());
@@ -58,8 +55,7 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 			
-			String sql =
-					"select no, name from user where email=? and password=?";
+			String sql = "select no, name from user where email=? and password=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, email);
@@ -104,13 +100,12 @@ public class UserRepository {
 		try {
 			conn = getConnection();
 			
-			String sql =
-					"select no, name, email, gender from user where no=?";
+			String sql = "select no, name, email, gender from user where no=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(1, userNo);
 			
-			rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery(); // 쿼리 실행
 			while(rs.next()) {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
@@ -161,7 +156,7 @@ public Boolean update(UserVo vo) {
 			pstmt.setString(3, vo.getGender());
 			pstmt.setLong(4, vo.getNo());
 			
-			int count = pstmt.executeUpdate();
+			int count = pstmt.executeUpdate(); // 쿼리 업데이트
 			result = count == 1;
 
 		} catch (SQLException e) {
