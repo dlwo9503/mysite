@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 
 public class DeleteFormAction implements Action {
 
@@ -15,7 +15,7 @@ public class DeleteFormAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp");
 //		rd.forward(request, response);
-		MVCUtils.forward("guestbook/deleteform", request, response);
+		MvcUtils.forward("guestbook/deleteform", request, response);
 	}
 
 }

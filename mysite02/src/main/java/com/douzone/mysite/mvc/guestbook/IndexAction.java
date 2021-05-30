@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 import com.douzone.mysite.repository.GuestbookRepository;
 import com.douzone.mysite.vo.GuestbookVo;
 
@@ -33,7 +33,7 @@ public class IndexAction implements Action {
 		// 3. view로 포워딩
 //		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/index.jsp");
 //		rd.forward(request, response);
-		MVCUtils.forward("guestbook/list", request, response);
+		MvcUtils.forward("guestbook/list", request, response);
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 import com.douzone.mysite.repository.UserRepository;
 import com.douzone.mysite.vo.UserVo;
 
@@ -24,7 +24,7 @@ public class LoginAction implements Action {
 		if(userVo == null) {
 			request.setAttribute("result", "fail");
 			request.setAttribute("email", email);
-			MVCUtils.forward("user/loginform", request, response);
+			MvcUtils.forward("user/loginform", request, response);
 			return;
 		}
 
@@ -33,6 +33,6 @@ public class LoginAction implements Action {
 		session.setAttribute("authUser", userVo);
 		
 		// main으로 리다이렉트!
-		MVCUtils.redirect(request.getContextPath(), request, response);
+		MvcUtils.redirect(request.getContextPath(), request, response);
 	}
 }

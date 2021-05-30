@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 
 public class LogoutAction implements Action {
 
@@ -20,7 +20,7 @@ public class LogoutAction implements Action {
 			session.removeAttribute("authUser");
 			session.invalidate();
 			
-			MVCUtils.redirect(request.getContextPath(), request, response);
+			MvcUtils.redirect(request.getContextPath(), request, response);
 		}
 		
 	}

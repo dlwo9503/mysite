@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 import com.douzone.mysite.repository.UserRepository;
 import com.douzone.mysite.vo.UserVo;
 
@@ -28,7 +28,7 @@ public class UpdateAction implements Action {
 		
 		new UserRepository().update(vo);
 		
-		MVCUtils.redirect(request.getContextPath(), request, response);
+		MvcUtils.redirect(request.getContextPath(), request, response);
 		
 	}
 }

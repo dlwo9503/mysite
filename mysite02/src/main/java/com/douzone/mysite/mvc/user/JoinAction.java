@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mvc.Action;
-import com.douzone.mvc.util.MVCUtils;
+import com.douzone.mvc.util.MvcUtils;
 import com.douzone.mysite.repository.UserRepository;
 import com.douzone.mysite.vo.UserVo;
 
@@ -27,7 +27,7 @@ public class JoinAction implements Action {
 		vo.setGender(gender);
 		
 		new UserRepository().insert(vo);
-		MVCUtils.redirect(request.getContextPath() + "/user?a=joinsuccess", request, response);
+		MvcUtils.redirect(request.getContextPath() + "/user?a=joinsuccess", request, response);
 	}
 
 }
