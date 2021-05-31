@@ -21,5 +21,4 @@ public class GuestbookActionFactory extends ActionFactory {
 		
 		return action;
 	}
-
 }
