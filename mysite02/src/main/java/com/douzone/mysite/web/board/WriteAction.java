@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.douzone.web.Action;
 import com.douzone.web.util.MvcUtils;
 
-public class ViewAction implements Action {
+public class WriteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MvcUtils.forward("board/view", request, response);
+		MvcUtils.forward("board/write", request, response);
 	}
 }
