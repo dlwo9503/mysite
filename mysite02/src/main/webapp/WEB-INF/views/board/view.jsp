@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<%@page import="com.douzone.mysite.vo.BoardVo"%>
+<%@page import="com.douzone.mysite.repository.boardRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -21,22 +24,21 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>제목입니다.</td>
+						<td>${list.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								내용 1입니다.<br>
-								내용 2입니다.<br>
-								내용 3입니다.
+								${list.contents }
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="">글목록</a> <!-- 모두다 볼 수 있도 -->
-					<a href="">글수정</a> <!-- 글쓴이만 보이도록 -->
+					<a href="${pageContext.servletContext.contextPath }/board">글목록</a> <!-- 모두다 볼 수 있도 -->
+					<a href="${pageContext.servletContext.contextPath }/board?a=modify">글수정</a> <!-- 글쓴이만 보이도록 -->
+					<a href="${pageContext.servletContext.contextPath }/board?a=write2&userNo=${authUser.no }&group_no=${list.group_no }" id="new-book">글쓰기</a>
 				</div>
 			</div>
 		</div>

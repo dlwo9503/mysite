@@ -11,7 +11,7 @@ import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.Action;
 import com.douzone.web.util.MvcUtils;
 
-public class WriteAction implements Action {
+public class WriteAction2 implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,8 +22,10 @@ public class WriteAction implements Action {
 		vo.setTitle(title);
 		vo.setContents(contents);
 		vo.setUserNo(userNo);
+		System.out.println(vo.getOrder_no());
 		
-		new boardRepository().insert(vo);
+		new boardRepository().update(vo);
+		new boardRepository().insert2(vo);
 		
 		MvcUtils.forward("board/write", request, response);
 	}
