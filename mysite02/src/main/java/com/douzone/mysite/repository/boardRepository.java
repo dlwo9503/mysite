@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.GuestbookVo;
 import com.douzone.mysite.vo.UserVo;
 
 public class boardRepository {
@@ -56,16 +57,15 @@ public class boardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "insert into board values(null, ?, ?, now(), ?, ?, ?, ?, ?)";
+			String sql = "insert into board values(null, ?, ?, now(), 0, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql); // 명령 문장, 연결을 한 후 질의수행을 하기위함
 
 			pstmt.setString(1, vo.getTitle()); // 바인딩
 			pstmt.setString(2, vo.getContents());
-			pstmt.setLong(3, vo.getHit());
-			pstmt.setLong(4, vo.getGroup_no());
-			pstmt.setLong(5, vo.getOrder_no());
-			pstmt.setLong(6, vo.getDepth());
-			pstmt.setLong(7, vo.getUserNo());
+			pstmt.setLong(3, vo.getGroup_no());
+			pstmt.setLong(4, vo.getOrder_no());
+			pstmt.setLong(5, vo.getDepth()+1);
+			pstmt.setLong(6, vo.getUserNo());
 
 			int count = pstmt.executeUpdate(); // 질의 수행, insert문이니 executeUpdate
 			result = count == 1;
@@ -123,6 +123,40 @@ public class boardRepository {
 		return result;
 
 	}
+	
+	public boolean delete(Long no) {
+		boolean result = false;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = getConnection();
+			
+			String sql = "delete from board where no=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setLong(1, no);
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		
+		return result;		
+	}
 
 	public List<BoardVo> findAll() {
 		List<BoardVo> list = new ArrayList<>();
@@ -134,7 +168,7 @@ public class boardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select a.no, a.title, a.depth, a.hit, b.no as userNo, b.name from board a, user b where a.user_no = b.no order by a.group_no DESC, a.order_no ASC";
+			String sql = "select a.no, a.title, a.depth, a.hit, b.no as userNo, b.name, a.group_no from board a, user b where a.user_no = b.no order by a.group_no DESC, a.order_no ASC";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -142,18 +176,20 @@ public class boardRepository {
 			while (rs.next()) {
 				Long no = rs.getLong(1);
 				String title = rs.getString(2);
-				String depth = rs.getString(3);
+				int depth = rs.getInt(3);
 				Long hit = rs.getLong(4);
 				Long userNo = rs.getLong(5);
 				String name = rs.getString(6);
+				int group_no = rs.getInt(7);
 
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
 				vo.setTitle(title);
-				vo.setDepth(0);
+				vo.setDepth(depth);
 				vo.setHit(0);
 				vo.setUserNo(userNo);
 				vo.setUserName(name);
+				vo.setGroup_no(group_no);
 
 				list.add(vo);
 			}
@@ -186,7 +222,7 @@ public class boardRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select title, contents from board where no = ?";
+			String sql = "select no, title, contents, depth, order_no from board where no = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setLong(1, no);
@@ -194,12 +230,18 @@ public class boardRepository {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String title = rs.getString(1);
-				String contents = rs.getString(2);
+				Long no1 = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				int depth = rs.getInt(4);
+				int order_no = rs.getInt(4);
 
 				vo = new BoardVo();
+				vo.setNo(no1);
 				vo.setTitle(title);
 				vo.setContents(contents);
+				vo.setDepth(depth);
+				vo.setOrder_no(order_no);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);

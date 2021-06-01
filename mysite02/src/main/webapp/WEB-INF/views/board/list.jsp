@@ -1,12 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<%@page import="com.douzone.mysite.vo.BoardVo"%>
-<%@page import="java.util.List"%>
-<%@page import="com.douzone.mysite.repository.boardRepository"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,7 +17,6 @@
 				<form id="search_form" action="" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
-					
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -37,41 +30,21 @@
 					<c:forEach items="${list }" var="vo" varStatus="status">	
 					<tr>
 						<td>${vo.no }</td>
-						<td style="text-align:left; padding-left:0px"><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
+						<c:if test="${vo.depth == 0}">
+							<td style="text-align:left;"><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&group_no=${vo.group_no }">${vo.title }</a></td>
+						</c:if>
+						<c:if test="${vo.depth >= 1}">
+							<td style="text-align:left; padding-left:${vo.depth*20 }px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&group_no=${vo.group_no }">${vo.title }</a></td>
+						</c:if>
 						<!-- <td style="text-align:left; padding-left:${vo.depth*30}px"><a href="">세 번째 글입니다.</a></td>  -->
 						<td>${vo.userName }</td>
 						<td>${vo.hit }</td>
 						<td>${regDate }</td>
 						<c:if test="${vo.userNo == authUser.no }"> <!-- 글쓴 유저 번호와 로그인중인 유저 번호 비교 -->
-							<td><a href="" class="del">삭제</a></td>
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
 						</c:if>
 					</tr>
 					</c:forEach>		
-					<tr>
-						<td>3</td>
-						<td style="text-align:left; padding-left:0px"><a href="${pageContext.servletContext.contextPath }/board?a=view">세 번째 글입니다.</a></td>
-						<!-- <td style="text-align:left; padding-left:${vo.depth*30}px"><a href="">세 번째 글입니다.</a></td>  -->
-						<td>이재성</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td style="text-align:left; padding-left:20px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="">두 번째 글입니다.</a></td>
-						<td>이재성</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td style="text-align:left; padding-left:40px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="">첫 번째 글입니다.</a></td>
-						<td>이재성</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
 				</table>
 				
 				<!-- pager 추가 -->
@@ -85,10 +58,13 @@
 						<li>5</li>
 						<li><a href="">▶</a></li>
 					</ul>
-				</div>					
+				</div>
+									
 				<!-- pager 추가 -->
+				
+				
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board?a=write&userNo=${authUser.no }" id="new-book">글쓰기</a>
+					<a href="${pageContext.servletContext.contextPath }/board?a=writeform&userNo=${authUser.no }" id="new-book">글쓰기</a>
 				</div>				
 			</div>
 		</div>
