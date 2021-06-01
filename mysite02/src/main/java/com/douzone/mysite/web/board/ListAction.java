@@ -1,8 +1,6 @@
 package com.douzone.mysite.web.board;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,16 +16,31 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int page = 0;
+		int count = 0;
+		List<BoardVo>list = null;
 		
-		List<BoardVo> list = new boardRepository().findAll();
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
 		
-		Date date = new Date();
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String regDate = transFormat.format(date);
-		// 2. request범위에 데이터(객체) 저장, 여기에 list를 저장해서 jsp쪽으로 넘겨줄거임
-		request.setAttribute("list", list); // (이름, 데이터)
-		request.setAttribute("regDate", regDate); // (이름, 데이터)
+		if(request.getParameter("kwd") != null) {
+			String keyword = request.getParameter("kwd");
+			count = new boardRepository().findcount(keyword);
+			list = new boardRepository().findAll2(page, keyword);
+		} else {
+			count = new boardRepository().count();
+			list = new boardRepository().findAll(page);
+		}
 		
+		int firstpage = 0;
+		int lastpage = (int) Math.ceil(count/5);
+		int size = list.size();
+		
+		request.setAttribute("firstPage", firstpage);
+		request.setAttribute("lastPage", lastpage);
+		request.setAttribute("size", size);
+		request.setAttribute("list", list);
 		MvcUtils.forward("board/list", request, response);
 	}
 

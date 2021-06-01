@@ -6,8 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mysite.repository.boardRepository;
-import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.Action;
 import com.douzone.web.util.MvcUtils;
 
@@ -15,18 +13,18 @@ public class WriteFormAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userNo = request.getParameter("userNo");
-		
-		if(userNo != null) { // 댓글
-			MvcUtils.forward("board/write", request, response);
-		} else {
-			userNo = "0";
-			Long no = Long.parseLong(request.getParameter("no")); // 타입변환
-			BoardVo list = new boardRepository().findAll2(no);
-			request.setAttribute("list", list); // (이름, 데이터)
-			MvcUtils.forward("board/write", request, response);
+		Long no = 0L;
+		String no2 = request.getParameter("no2");
+		if(request.getParameter("no") != null) {
+			no = Long.parseLong(request.getParameter("no"));
 		}
-
+		if(no2 == null) {
+			request.setAttribute("no2", "write");
+		} else if (no2.equals("comment")) {
+			request.setAttribute("no", no);
+			request.setAttribute("no2", no2);
+		}
+		MvcUtils.forward("board/write", request, response);
 	}
 
 }

@@ -139,34 +139,32 @@ public class UserRepository {
 		return result;
 	}
 	
-public Boolean update(UserVo vo) {
-		
+	public Boolean update(UserVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
-
 		try {
 			conn = getConnection();
 
-			String sql = "update user set name = ?, password = ?, gender =? where no =?";
+			String sql = "update user set name=?, password=?, gender=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getGender());
 			pstmt.setLong(4, vo.getNo());
-			
-			int count = pstmt.executeUpdate(); // 쿼리 업데이트
+
+			int count = pstmt.executeUpdate();
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			System.out.println("error: " + e);
 		} finally {
 			try {
-				if(pstmt != null) {
+				if (pstmt != null) {
 					pstmt.close();
 				}
-				if(conn != null) {
+				if (conn != null) {
 					conn.close();
 				}
 			} catch (SQLException e) {
@@ -175,14 +173,13 @@ public Boolean update(UserVo vo) {
 		}
 
 		return result;
-		
 	}
 	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver"); // 드라이버 로
-			String url = "jdbc:mysql://192.168.254.31:3307/webdb?characterEncoding=utf8"; // url 정의
+			String url = "jdbc:mysql://192.168.0.95:3307/webdb?characterEncoding=utf8"; // url 정의
 			conn = DriverManager.getConnection(url, "webdb", "webdb"); // Connection 얻기
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);

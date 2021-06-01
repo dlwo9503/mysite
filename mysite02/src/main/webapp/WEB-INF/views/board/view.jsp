@@ -2,16 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	pageContext.setAttribute("newline", "\n");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/board.css"
+	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
@@ -20,27 +24,30 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${list.title }</td>
+						<td>${vo.title }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${list.contents }
+								${fn:replace(vo.contents, newline, "<br/>") } <!-- 개행처리 -->
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board">글목록</a> <!-- 모두다 볼 수 있도 -->
-					<a href="${pageContext.servletContext.contextPath }/board?a=modify">글수정</a> <!-- 글쓴이만 보이도록 -->
-					<a href="${pageContext.servletContext.contextPath }/board?a=writeform&no=${list.no }" id="new-book">글쓰기</a>
-					<!-- <a href="${pageContext.servletContext.contextPath }/board?a=writeform&userNo=${authUser.no }&group_no=${list.group_no }&depth=${list.depth }" id="new-book">글쓰기</a> -->
+					<a href="${pageContext.request.contextPath }/board">글목록</a>
+					<c:if test="${not empty authUser and vo.userNo == authUser.no}">
+						<a href="${pageContext.request.contextPath }/board?a=modifyform&userNo=${vo.userNo}&no=${vo.no}">글수정</a>
+					</c:if>
+					<c:if test="${not empty authUser }">
+						<a href='${pageContext.request.contextPath }/board?a=writeform&no2=comment&no=${vo.no}'>글쓰기</a>
+					</c:if>
 				</div>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
-		<c:import url="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	</div>
 </body>
 </html>

@@ -14,8 +14,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board" method="post">
+					<input type="text" id="kwd" name="kwd" value=>
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -26,45 +26,53 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>	
-					<c:forEach items="${list }" var="vo" varStatus="status">	
-					<tr>
-						<td>${vo.no }</td>
-						<c:if test="${vo.depth == 0}">
-							<td style="text-align:left;"><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&group_no=${vo.group_no }">${vo.title }</a></td>
-						</c:if>
-						<c:if test="${vo.depth >= 1}">
-							<td style="text-align:left; padding-left:${vo.depth*20 }px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&group_no=${vo.group_no }">${vo.title }</a></td>
-						</c:if>
-						<!-- <td style="text-align:left; padding-left:${vo.depth*30}px"><a href="">세 번째 글입니다.</a></td>  -->
-						<td>${vo.userName }</td>
-						<td>${vo.hit }</td>
-						<td>${regDate }</td>
-						<c:if test="${vo.userNo == authUser.no }"> <!-- 글쓴 유저 번호와 로그인중인 유저 번호 비교 -->
-							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no }" class="del">삭제</a></td>
-						</c:if>
 					</tr>
-					</c:forEach>		
+					<c:set var="count" value="${fn:length(list) }"/>
+					<c:forEach var="vo" items="${list }" varStatus="status">
+								<tr>
+									<td>${count-status.index }</td>
+									<c:if test="${vo.depth == 0}">
+										<td style="text-align:left; padding-left:0px">
+										<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&hit=${vo.hit}"> ${vo.title }</a></td>
+									</c:if>
+									<c:if test="${vo.depth >= 1}">
+										<td style="text-align:left; padding-left:${vo.depth * 20 }px">
+										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
+										<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&hit=${vo.hit}"> ${vo.title }</a></td>
+									</c:if>
+									<td>${vo.userName }</td>
+									<td>${vo.hit }</td>
+									<td>${vo.regDate }</td>
+									<c:if test="${vo.userNo == authUser.no }">
+										<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&userNo=${vo.userNo}&no=${vo.no}" class="del">삭제</a></td>
+									</c:if>
+								</tr>
+					</c:forEach>				
 				</table>
 				
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="/mysite02/board?p=1">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="/mysite02/board?p=3">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<li><a href="${pageContext.servletContext.contextPath }/board?page=0">◀</a></li>
+							<c:forEach begin="0" end="${lastPage -1}" var="lastPage" varStatus="status">
+								<c:choose>
+									<c:when test="${param.page == status.index }">
+										<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=list&page=${status.index }">${status.count }</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${pageContext.servletContext.contextPath }/board?a=list&page=${status.index }">${status.count }</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						<li><a href="${pageContext.servletContext.contextPath }/board?page=${lastPage - 1 }">▶</a></li>
 					</ul>
-				</div>
-									
+				</div>					
 				<!-- pager 추가 -->
 				
-				
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board?a=writeform&userNo=${authUser.no }" id="new-book">글쓰기</a>
+					<c:if test="${not empty authUser }">
+						<a href="${pageContext.servletContext.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+					</c:if>
 				</div>				
 			</div>
 		</div>

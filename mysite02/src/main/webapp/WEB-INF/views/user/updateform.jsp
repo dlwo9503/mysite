@@ -16,17 +16,17 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-				<form id="join-form" name="joinForm" method="post"
-					action="${pageContext.request.contextPath }/user">
-					<input type="hidden" name="a" value="update" /> <label
-						class="block-label" for="name">이름</label> <input id="name"
-						name="name" type="text" value=""> <label
-						class="block-label" for="email">이메일</label>
+				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath }/user">
+					<input type="hidden" name="a" value="update" /> 
+					<input type="hidden" name="no" value="${userVo.no }" />
+					<label class="block-label" for="name">이름</label> 
+					<input id="name" name="name" type="text" value="">
+					<label class="block-label" for="email">이메일</label>
 					<h4>${userVo.email }</h4>
 					<!-- 임시, 이메일값 받아와서 적용 -->
 
-					<label class="block-label">패스워드</label> <input name="password"
-						type="password" value="">
+					<label class="block-label">패스워드</label> 
+					<input name="password" type="password" value="">
 
 					<fieldset>
 						<legend>성별</legend>

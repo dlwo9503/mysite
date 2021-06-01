@@ -18,17 +18,16 @@ public class UpdateAction implements Action {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String gender = request.getParameter("gender");
-		Long no = Long.parseLong(request.getParameter("no")); // 타입변환
+		Long no = Long.parseLong(request.getParameter("no"));
 		
 		UserVo vo = new UserVo();
+		vo.setNo(no);
 		vo.setName(name);
 		vo.setPassword(password);
 		vo.setGender(gender);
-		vo.setNo(no);
 		
 		new UserRepository().update(vo);
-		
 		MvcUtils.redirect(request.getContextPath(), request, response);
-		
 	}
+
 }
