@@ -54,7 +54,7 @@
 				<div class="pager">
 					<ul>
 						<li><a href="${pageContext.servletContext.contextPath }/board?page=0">◀</a></li>
-							<c:forEach begin="0" end="${lastPage -1}" var="lastPage" varStatus="status">
+							<c:forEach begin="0" end="${lastPage}" var="lastPage" varStatus="status">
 								<c:choose>
 									<c:when test="${param.page == status.index }">
 										<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?a=list&page=${status.index }">${status.count }</a></li>
