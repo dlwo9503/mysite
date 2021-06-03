@@ -20,9 +20,7 @@ Long no = Long.parseLong(no2);
 			<div id="content">
 				<div id="site-introduction">
 					<form method="post"
-						action="${pageContext.request.contextPath }/guestbook">
-						<input type="hidden" name="a" value="delete"> <input
-							type='hidden' name="no" value=${no } }>
+						action="${pageContext.request.contextPath }/guestbook/delete/${no }">
 						<!-- hidden으로 숨기고 벨류값을 받아와야 함 -->
 						<table>
 							<tr>
