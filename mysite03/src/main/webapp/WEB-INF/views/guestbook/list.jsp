@@ -2,9 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<%@page import="java.util.List"%>
+<%-- <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
+<%@page import="java.util.Date"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
