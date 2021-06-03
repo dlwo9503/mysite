@@ -14,7 +14,7 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="com.douzone.mysite.repository">
+	<context:component-scan base-package="com.douzone.mysite.repository, com.douzone.mysite.service"> <!-- 두 군데서 스캐닝하라는 뜻 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" /> <!--이게 @찾는 역할 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" /> <!--이게 @찾는 역할 -->
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" /> <!--이게 @찾는 역할 -->

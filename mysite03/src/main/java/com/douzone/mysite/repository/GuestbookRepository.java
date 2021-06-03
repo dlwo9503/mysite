@@ -77,10 +77,7 @@ public class GuestbookRepository {
 			conn = getConnection();
 			
 			String sql =
-					" delete" +
-					"   from guestbook" +
-					"  where no=?" +
-					"    and password=?";
+					" delete from guestbook where no=? and password=?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(1, vo.getNo());
@@ -154,14 +151,17 @@ public class GuestbookRepository {
 		try {
 			conn = getConnection();
 
-			String sql = "select password from guestbook where no = ?";
+			String sql = "select no, password from guestbook where no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, no2);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String password = rs.getString(1);
+				
+				Long no = rs.getLong(1);
+				String password = rs.getString(2);
 //
+				vo.setNo(no);
 				vo.setPassword(password);
 			}
 		} catch (SQLException e) {
