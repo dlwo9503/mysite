@@ -18,6 +18,10 @@ public class GuestbookService {
 	}
 	
 	public void deleteMessage(Long no, String password) {
+//		GuestbookVo vo = new GuestbookVo();
+//		vo.setNo(no);
+//		vo.setPassword(password);
+		
 		GuestbookVo vo1 = guestbookRepository.findAll2(no);
 		if(vo1.getPassword().equals(password)){
 			guestbookRepository.delete(vo1);

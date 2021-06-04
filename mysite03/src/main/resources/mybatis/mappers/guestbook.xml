@@ -9,11 +9,11 @@
 		]]>
 	</select>
 	
-<!-- 	<select id="findAll2" resultType="guestbookvo" parameterType="long">
+ 	<select id="findAll2" parameterType="long" resultType="guestbookvo">
 		<![CDATA[
-			select no, password from guestbook where no=#{no2 }
+			select no, password from guestbook where no=#{no }
 		]]>
-	</select> -->
+	</select>
 	
 	<insert id="insert" parameterType="guestbookvo">
 		<!-- ? 자리에 #{}으로 값을 넣어줌 -->
