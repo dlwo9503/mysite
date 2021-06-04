@@ -36,29 +36,30 @@
 								<td colspan=4><textarea name="message" cols=60 rows=5></textarea></td>
 							</tr>
 							<tr>
-								<td colspan=4 align=right><input type="submit" VALUE=" 등록 "></td>
+								<td colspan=4 align=rsight><input type="submit" VALUE=" 등록 "></td>
 							</tr>
 						</table>
 					</form>
-					<br>
+					<br><br>
 
 					<c:set var="index" value="0" />
 					<c:set var="count" value="${fn:length(list) }"/>
 					<c:forEach items="${list }" var="vo" varStatus="status">
-					<table width=510 border=1>
-						<tr>
-							<td>[${count - status.index }]</td>
-							<!--  -->
-							<td>${vo.name }</td>
-							<td>${vo.regDate }</td>
-							<td><a
-								href="${pageContext.request.contextPath }/guestbook/deleteform/${vo.no }">삭제</a></td>
-						</tr>
-						<tr>
-							<td colspan=4>${fn:replace(vo.message, newline, "<br/>") }</td>
-						</tr>
-					</table>
-		</c:forEach>
+						<table width=510 border=1>
+							<tr>
+								<td>[${count - status.index }]</td>
+								<!--  -->
+								<td>${vo.name }</td>
+								<td>${vo.regDate }</td>
+								<td><a
+									href="${pageContext.request.contextPath }/guestbook/deleteform/${vo.no }">삭제</a></td>
+							</tr>
+							<tr>
+								<td colspan=4>${fn:replace(vo.message, newline, "<br/>") }</td>
+							</tr>
+						</table>
+						<br>
+					</c:forEach>
 					<table border="1" cellspacing="0" cellpadding="5">
 						<c:forEach begin="1" end="${row }" step="1" var="r">
 							<!-- 0 ~ 9 까지 var값 step만큼 증가시키면서 반복 -->
