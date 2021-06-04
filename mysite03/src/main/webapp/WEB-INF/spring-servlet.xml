@@ -12,12 +12,21 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven />
-	
+
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
-	<mvc:default-servlet-handler/>
+	<mvc:default-servlet-handler />
 	
+	<!--  ViewResolver 설정 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> <!-- 하나만 쓸때는 이렇게, 여러개를 쓸때는 리스트를 만들어 세팅 -->
+		<property name="prefix" value="/WEB-INF/views/" /> <!-- 앞에 붙이는거 -->
+		<property name="suffix" value=".jsp" /> <!-- 뒤에 붙이는거 -->
+		<!-- <property name="order" value="1" /> 여러개 사용할때만 필요, 지금은 필요없음 -->
+	</bean>
+
 	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
-	<context:component-scan base-package="com.douzone.mysite.controller" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
+	<context:component-scan
+		base-package="com.douzone.mysite.controller" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
 	<!-- com.douzone.mysite.controller 이라는 패키지로 가서 스캔을 한다는 의미 -->
 
 </beans>

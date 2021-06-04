@@ -24,13 +24,13 @@ public class GuestbookController {
 		List<GuestbookVo> list = guestbookService.getMessageList();
 		
 		model.addAttribute("list", list);
-		return "/WEB-INF/views/guestbook/list.jsp";
+		return "guestbook/list";
 	}
 	
 	@RequestMapping(value = "/deleteform/{no}", method=RequestMethod.GET)
 	public String deleteform(@PathVariable("no") Long no, Model model) {
 		model.addAttribute("no", no); // key, value 값을 view에 전달함
-		return "/WEB-INF/views/guestbook/deleteform.jsp";
+		return "guestbook/deleteform";
 	}
 	
 	@RequestMapping(value = "/delete/{no}", method=RequestMethod.POST)
