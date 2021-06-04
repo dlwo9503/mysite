@@ -49,7 +49,7 @@ public class GuestbookRepository {
 			}
 			
 		} catch (SQLException e) {
-			throw new GuestbookRepositoryException(e.getMessage()); // 예외를 한곳에 모으기 위한 전초작업
+			throw new GuestbookRepositoryException(e.getMessage()); // 예외를 한곳에 모으기 위한 전초작업, 런타입 에러로 포장하는 메소드
 //			System.out.println("error:" + e);
 		} finally {
 			try {
