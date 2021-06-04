@@ -57,7 +57,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) { // 로그인 안했을 때
+		if(authUser == null) { // 로그인 안했을 때, 접근제어
 			return "redirect:/";
 		}
 		
@@ -65,5 +65,33 @@ public class UserController {
 		session.removeAttribute("authUser");
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String update(HttpSession session, Model model) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) { // 로그인 안했을 때, 접근제어
+			return "redirect:/";
+		}
+		
+		Long no = authUser.getNo();
+		UserVo userVo = userService.getUser(no);
+		
+		model.addAttribute("user", userVo);
+		return "user/update";
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String update(HttpSession session, UserVo userVo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		if(authUser == null) { // 로그인 안했을 때, 접근제어
+			return "redirect:/";
+		}
+		
+		userVo.setNo(authUser.getNo());
+		userService.updateUser(userVo);
+		authUser.setName(userVo.getName());
+		
+		return "redirect:/user/update";
 	}
 }
