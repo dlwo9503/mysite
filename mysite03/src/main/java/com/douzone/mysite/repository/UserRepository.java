@@ -16,6 +16,7 @@ import com.douzone.mysite.vo.UserVo;
 public class UserRepository {
 	@Autowired
 	private SqlSession sqlSession;
+	
 	public boolean insert(UserVo vo) {
 		boolean result = false;
 
