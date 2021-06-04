@@ -5,7 +5,31 @@
 	<select id="findAll" resultType="com.douzone.mysite.vo.GuestbookVo"> <!-- id 안주면 에러뜸 -->
 		<!-- 이거안에 넣어주는게 좋음 -->
 		<![CDATA[
-		select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, message from guestbook order by reg_date desc
+			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, message from guestbook order by reg_date desc
 		]]>
 	</select>
+	
+<!-- 	<select id="findAll2" resultType="guestbookvo" parameterType="long">
+		<![CDATA[
+			select no, password from guestbook where no=#{no2 }
+		]]>
+	</select> -->
+	
+	<insert id="insert" parameterType="guestbookvo">
+		<!-- ? 자리에 #{}으로 값을 넣어줌 -->
+		<![CDATA[
+			insert into guestbook values (null, #{name }, #{password }, #{message }, now())
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select last_insert_id();
+			]]>
+		</selectKey>
+	</insert>
+	
+	<delete id="delete" parameterType="guestbookvo">
+		<![CDATA[
+			delete from guestbook where no=#{no } and password=#{password }
+		]]>
+	</delete>
 </mapper>
