@@ -36,7 +36,7 @@
 								<td colspan=4><textarea name="message" cols=60 rows=5></textarea></td>
 							</tr>
 							<tr>
-								<td colspan=4 align=rsight><input type="submit" VALUE=" 등록 "></td>
+								<td colspan=4 align=right><input type="submit" VALUE=" 등록 "></td>
 							</tr>
 						</table>
 					</form>
