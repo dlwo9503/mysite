@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
-public class boardRepository {
+public class BoardRepository {
 	public Boolean insert(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
