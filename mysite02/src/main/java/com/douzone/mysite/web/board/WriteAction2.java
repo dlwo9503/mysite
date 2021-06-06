@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.douzone.mysite.repository.boardRepository;
+import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.Action;
@@ -33,7 +33,7 @@ public class WriteAction2 implements Action {
 		String title = request.getParameter("title");
 		String contents = request.getParameter("content");
 
-		BoardVo vo = new boardRepository().findById(no);
+		BoardVo vo = new BoardRepository().findById(no);
 		int groupNo = vo.getGroup_no();
 		int depth = vo.getDepth();
 		int orderNo = vo.getOrder_no();
@@ -46,8 +46,8 @@ public class WriteAction2 implements Action {
 			vo.setGroup_no(groupNo);
 			vo.setOrder_no(1);
 			vo.setDepth(depth + 1);
-			new boardRepository().updatComment(groupNo);
-			new boardRepository().insertComment(vo);
+			new BoardRepository().updatComment(groupNo);
+			new BoardRepository().insertComment(vo);
 			MvcUtils.redirect(request.getContextPath() + "/board", request, response);
 		} else if (vo.getDepth() >= 1) {
 			vo = new BoardVo();
@@ -57,8 +57,8 @@ public class WriteAction2 implements Action {
 			vo.setGroup_no(groupNo);
 			vo.setOrder_no(orderNo + 1);
 			vo.setDepth(depth + 1);
-			new boardRepository().updatComment2(groupNo, orderNo);
-			new boardRepository().insertComment(vo);
+			new BoardRepository().updatComment2(groupNo, orderNo);
+			new BoardRepository().insertComment(vo);
 			MvcUtils.redirect(request.getContextPath() + "/board", request, response);
 		}
 	}

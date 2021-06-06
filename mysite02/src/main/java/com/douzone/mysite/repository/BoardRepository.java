@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
 
-public class boardRepository {
+public class BoardRepository {
 	public Boolean insert(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

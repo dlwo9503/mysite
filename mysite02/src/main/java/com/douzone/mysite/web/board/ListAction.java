@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mysite.repository.boardRepository;
+import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.Action;
 import com.douzone.web.util.MvcUtils;
@@ -26,11 +26,11 @@ public class ListAction implements Action {
 		
 		if(request.getParameter("kwd") != null) {
 			String keyword = request.getParameter("kwd");
-			count = new boardRepository().findcount(keyword);
-			list = new boardRepository().findAll2(page, keyword);
+			count = new BoardRepository().findcount(keyword);
+			list = new BoardRepository().findAll2(page, keyword);
 		} else {
-			count = new boardRepository().count();
-			list = new boardRepository().findAll(page);
+			count = new BoardRepository().count();
+			list = new BoardRepository().findAll(page);
 		}
 		
 		int firstpage = 0;

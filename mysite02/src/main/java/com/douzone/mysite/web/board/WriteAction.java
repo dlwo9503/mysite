@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.douzone.mysite.repository.boardRepository;
+import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.Action;
@@ -37,7 +37,7 @@ public class WriteAction implements Action {
 		vo.setContents(contents);
 		vo.setUserNo(userNo);
 		
-		new boardRepository().insert(vo);
+		new BoardRepository().insert(vo);
 		MvcUtils.redirect(request.getContextPath()+"/board", request, response);
 	}
 

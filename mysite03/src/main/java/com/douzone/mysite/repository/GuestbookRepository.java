@@ -1,12 +1,6 @@
 package com.douzone.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -39,45 +33,6 @@ public class GuestbookRepository {
 	}
 	
 	public GuestbookVo findAll2(Long no) {
-//		GuestbookVo vo = new GuestbookVo();
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		try {
-//			conn = dataSource.getConnection();
-//
-//			String sql = "select no, password from guestbook where no = ?";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setLong(1, no2);
-//			rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				
-//				Long no = rs.getLong(1);
-//				String password = rs.getString(2);
-////
-//				vo.setNo(no);
-//				vo.setPassword(password);
-//			}
-//		} catch (SQLException e) {
-//			System.out.println("error : " + e);
-//		} finally {
-//			try {
-//				if (rs != null) {
-//					rs.close();
-//				}
-//				if (pstmt != null) {
-//					pstmt.close();
-//				}
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		return vo;
 		return sqlSession.selectOne("guestbook.findAll2", no);
 	}
 }
