@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -54,6 +55,9 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	// 인증을 하고 사용할 수 있도록 처리하는거, 로그인을 했냐 안했냐를 인증, role을 이용해서 권한을 줄 수 있음, Auth를 해석하는 놈은 다른곳에 있
+//	@Auth(role='admin')
+	@Auth
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -67,6 +71,7 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -81,6 +86,7 @@ public class UserController {
 		return "user/update";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(HttpSession session, UserVo userVo) {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
