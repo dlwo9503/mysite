@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.UserService;
@@ -39,37 +38,12 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(
-			@RequestParam(value = "email", required = true, defaultValue = "") String email,
-			@RequestParam(value = "password", required = true, defaultValue = "") String password, Model model, HttpSession session) {
-		UserVo authUser = userService.getUser(email, password);
-		if(authUser == null) {
-			model.addAttribute("result", "fail");
-			model.addAttribute("email", email);
-			return "user/login";
-		}
-//		로그인 처리
-		session.setAttribute("authUser", authUser);
-		return "redirect:/";
-	}
 	
-	// 인증을 하고 사용할 수 있도록 처리하는거, 로그인을 했냐 안했냐를 인증, role을 이용해서 권한을 줄 수 있음, Auth를 해석하는 놈은 다른곳에 있
-//	@Auth(role='admin')
-	@Auth
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) { // 로그인 안했을 때, 접근제어
-			return "redirect:/";
-		}
-		
-		// 로그아웃 처리
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:/";
-	}
+	// login 없앰
+	
+	// 인증을 하고 사용할 수 있도록 처리하는거, 로그인을 했냐 안했냐를 인증, role을 이용해서 권한을 줄 수 있음, Auth를 해석하는 놈은 다른곳에 있음
+	
+	// logout 없앰
 	
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
