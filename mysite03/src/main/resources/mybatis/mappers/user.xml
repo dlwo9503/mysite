@@ -4,13 +4,13 @@
 <mapper namespace="user"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
-			insert into user values(null, #{name }, #{email }, #{password }, #{gender })
+			insert into user values(null, #{name }, #{email }, #{password }, #{gender }, 'USER')
 		]]>
 	</insert>
 	
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
-			select no, name from user where email=#{e } and password=#{p }
+			select no, name, role from user where email=#{e } and password=#{p }
 		]]>
 	</select>
 	

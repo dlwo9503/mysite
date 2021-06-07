@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +20,7 @@ public class GuestbookController {
 	
 	@RequestMapping("")
 	public String guestbook(Model model) {
-//		List<GuestbookVo> list = guestbookRepository.findAll();
 		List<GuestbookVo> list = guestbookService.getMessageList();
-		
 		model.addAttribute("list", list);
 		return "guestbook/list";
 	}
