@@ -31,7 +31,7 @@
 						<!-- <input type="file" name="file1"> -->
 
 						<label class="block-label">사이트 설명</label>
-						<textarea name="description">${fn:replace(siteVo.description, newline, "<br/>") }</textarea>
+						<textarea name="description">${siteVo.description }</textarea>
 						
 						<input type="submit" value="변경" />
 					</form>

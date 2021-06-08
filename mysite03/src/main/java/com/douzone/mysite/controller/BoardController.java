@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
@@ -101,14 +102,11 @@ public class BoardController {
 	}
 	
 	@Auth
-	@RequestMapping( value="/comment/{no2}/{no}" )	
-	public String reply(@PathVariable( "no" ) String no2, @PathVariable( "no" ) Long no, Model model) {
-		BoardVo boardVo = boardService.getContents( no );
-		boardVo.setOrder_no( boardVo.getOrder_no() + 1 );
-		boardVo.setDepth( boardVo.getDepth() + 1 );
+	@RequestMapping( value="/comment/{no}", method=RequestMethod.GET )	
+	public String comment(@PathVariable( "no" ) Long no, Model model) {
+		String no2 = "comment";
 		
-		model.addAttribute( "boardVo", boardVo );
-		model.addAttribute( "comment", no2 );
+		model.addAttribute( "no2", no2 );
 		
 		return "board/write";
 	}
@@ -116,10 +114,11 @@ public class BoardController {
 	@Auth
 	@RequestMapping( value="/comment/{no}", method=RequestMethod.POST )	
 	public String comment(
-		@AuthUser UserVo authUser,
-		@ModelAttribute BoardVo boardVo,
-		String title, 
-		String content ) {
+		@AuthUser UserVo authUser, String title, 
+		String content, @PathVariable( "no" ) Long no, Model model ) {
+		BoardVo boardVo = boardService.getContents( no );
+		boardVo.setOrder_no( boardVo.getOrder_no() + 1 );
+		boardVo.setDepth( boardVo.getDepth() + 1 );
 		
 		if(authUser == null) {
 			return	"redirect:/board/";
@@ -133,4 +132,23 @@ public class BoardController {
 		
 		return	"redirect:/board/";
 	}
+	
+	@Auth
+	@RequestMapping( value="/modifyform/{userNo}/{no}", method=RequestMethod.GET )	
+	public String modifyform(@PathVariable( "userNo" ) Long userNo, @PathVariable( "no" ) Long no, Model model) {
+		BoardVo boardVo = boardService.getfindById(no);
+		
+		model.addAttribute( "boardVo", boardVo );
+		return "board/modify";
+	}
+	
+	@Auth
+	@RequestMapping( value="/modify/{userNo}/{no}", method=RequestMethod.POST )	
+	public String modify(BoardVo boardVo, @AuthUser UserVo authUser, @PathVariable( "no" ) Long no, Model model ) {
+		
+		boardService.modify(boardVo);
+		
+		return "redirect:/board/";
+	}
+	
 }

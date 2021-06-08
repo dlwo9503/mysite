@@ -14,10 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 		<div id="content">
 			<div id="board">
-				<form class = "board-form" method="post" action="${pageContext.request.contextPath }/board">
-				<input type = "hidden" name = "a" value = "modify">
-				<input type = "hidden" name = "no" value = "${vo.no }" />
-				<input type = "hidden" name = "userNo" value = "${vo.userNo }" />
+				<form class = "board-form" method="post" action="${pageContext.request.contextPath }/board/modify/${userNo }/${no }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글수정</th>
@@ -29,12 +26,12 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="">취소</a>
+						<a href="${pageContext.request.contextPath }/board">취소</a>
 						<input type="submit" value="수정">
 					</div>
 				</form>				

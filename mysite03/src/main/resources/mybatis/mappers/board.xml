@@ -2,16 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-	<select id="findById" parameterType="long" resultType="boardvo">
+	<select id="findAll" parameterType="int" resultType="boardvo">
 		<![CDATA[
-		select no, title, contents, user_no, group_no, order_no, depth, user_no from board where no = #{no }
+			select a.no as no, a.title as title, a.depth as depth, a.hit as hit, b.no as userNo, b.name as name, a.reg_date as regDate from board a, user b where a.user_no = b.no order by a.group_no DESC, a.order_no ASC limit #{page },5
 		]]>
 	</select>
 
-
-	<update id="updateHit" parameterType="long">
+	<select id="findAll2" parameterType="map" resultType="boardvo">
 		<![CDATA[
-		update board set hit = hit + 1 where no=#{no }
+			select b.no as no, b.title as title, b.depth as depth, b.hit as hit, b.user_no as userNo, a.name as name, b.reg_date as regDate from board b join user a on a.no = b.user_no
+				where b.title like '%${keyword }%' or b.contents like '%${keyword }%' or a.name like '%${keyword }%'
+				order by b.group_no DESC, b.order_no ASC limit #{page },5
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="boardvo">
+		<![CDATA[
+			insert into board values(null, #{title }, #{contents }, now(), 0, (select IF(isnull(max(group_no)+1), 1, max(group_no)+1) from board ALIAS_FOR_SUBQUERY), 0, 0, #{userNo })
+		]]>
+	</insert>
+	
+	<select id="findById" parameterType="long" resultType="boardvo">
+		<![CDATA[
+			select no, title, contents, user_no as userNo, group_no, order_no, depth from board where no = #{no }
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="map">
+		<![CDATA[
+			delete from board where no = #{no } and user_no = #{userNo }
+		]]>
+	</delete>
+
+	<update id="updateHit" parameterType="boardvo">
+		<![CDATA[
+			update board set hit = hit + 1 where no=#{no }
+		]]>
+	</update>
+	
+	<update id="modify" parameterType="boardvo">
+		<![CDATA[
+			update board set title=#{title }, contents=#{contents } where no=#{no } and user_no=#{userNo }
+		]]>
+	</update>
+	
+	<insert id="insertComment" parameterType="boardvo">
+		<![CDATA[
+			insert into board values(null, #{title }, #{contents }, now(), 0, #{group_no }, #{order_no }, #{depth }, #{userNo })
+		]]>
+	</insert>
+	
+	<select id="count" resultType="int">
+		<![CDATA[
+			select count(*) from board
+		]]>
+	</select>
+	
+	<select id="findcount" resultType="int">
+		<![CDATA[
+			select count(*) from board b join user a on a.no = b.user_no
+				where b.title like '%${keyword }%' or b.contents like '%${keyword }%' or a.name like '%${keyword }%'
+		]]>
+	</select>
+	
+	<update id="updatComment" parameterType="int">
+		<![CDATA[
+			update board set order_no=order_no+1 where group_no = #{no } and order_no>=1
+		]]>
+	</update>
+	
+	<update id="updatComment2" parameterType="map">
+		<![CDATA[
+			update board set order_no=order_no+1 where group_no = #{no } and order_no>#{orderNo }
 		]]>
 	</update>
 

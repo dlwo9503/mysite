@@ -59,4 +59,8 @@ public class BoardService {
 		return boardVo;
 	}
 
+	public void modify(BoardVo vo) {
+		boardRepository.modify(vo);
+	}
+
 }

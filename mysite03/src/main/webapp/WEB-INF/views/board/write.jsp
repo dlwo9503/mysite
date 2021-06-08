@@ -41,7 +41,7 @@
 					</c:when>
 					<c:when test='${no2 eq "comment" }'>
 						<form class="board-form" method="post"
-							action="${pageContext.request.contextPath }/board/write/${no }">
+							action="${pageContext.request.contextPath }/board/comment/${no }">
 							<table class="tbl-ex">
 								<tr>
 									<th colspan="2">글쓰기</th>
