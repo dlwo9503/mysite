@@ -33,18 +33,18 @@
 									<td>${count-status.index }</td>
 									<c:if test="${vo.depth == 0}">
 										<td style="text-align:left; padding-left:0px">
-										<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&hit=${vo.hit}"> ${vo.title }</a></td>
+										<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no }/${vo.hit}"> ${vo.title }</a></td>
 									</c:if>
 									<c:if test="${vo.depth >= 1}">
 										<td style="text-align:left; padding-left:${vo.depth * 20 }px">
 										<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
-										<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }&hit=${vo.hit}"> ${vo.title }</a></td>
+										<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no }/${vo.hit}"> ${vo.title }</a></td>
 									</c:if>
 									<td>${vo.userName }</td>
 									<td>${vo.hit }</td>
 									<td>${vo.regDate }</td>
 									<c:if test="${vo.userNo == authUser.no }">
-										<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&userNo=${vo.userNo}&no=${vo.no}" class="del" style='background-image:url("/mysite03/assets/images/recycle.png")'>삭제</a></td>
+										<td><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}" class="del" style='background-image:url("/mysite03/assets/images/recycle.png")'>삭제</a></td>
 									</c:if>
 								</tr>
 					</c:forEach>				
@@ -71,7 +71,7 @@
 				
 				<div class="bottom">
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write" id="new-book">글쓰기</a>
 					</c:if>
 				</div>				
 			</div>
