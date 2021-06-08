@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
@@ -102,42 +101,16 @@ public class BoardController {
 	}
 	
 	@Auth
-	@RequestMapping( value="/comment/{no}", method=RequestMethod.GET)	
-	public String comment(@PathVariable( "no" ) Long no, 
-			@AuthUser UserVo authUser,
-			@ModelAttribute BoardVo boardVo,
-			String title, 
-			String content,
-			Model model) {
-		BoardVo vo = boardService.getfindById(no);
-		int groupNo = vo.getGroup_no();
-		int depth = vo.getDepth();
-		int orderNo = vo.getOrder_no();
-		if (vo.getDepth() == 0) {
-			vo = new BoardVo();
-			boardVo.setTitle(title);
-			boardVo.setContents(content);
-			boardVo.setUserNo( authUser.getNo() );
-			vo.setGroup_no(groupNo);
-			vo.setOrder_no(1);
-			vo.setDepth(depth + 1);
-			new BoardRepository().updatComment(groupNo);
-			new BoardRepository().insertComment(vo);
-		} else if (vo.getDepth() >= 1) {
-			vo = new BoardVo();
-			boardVo.setTitle(title);
-			boardVo.setContents(content);
-			boardVo.setUserNo( authUser.getNo() );
-			vo.setGroup_no(groupNo);
-			vo.setOrder_no(orderNo + 1);
-			vo.setDepth(depth + 1);
-			new BoardRepository().updatComment2(groupNo, orderNo);
-			new BoardRepository().insertComment(vo);
-		}
+	@RequestMapping( value="/comment/{no2}/{no}" )	
+	public String reply(@PathVariable( "no" ) String no2, @PathVariable( "no" ) Long no, Model model) {
+		BoardVo boardVo = boardService.getContents( no );
+		boardVo.setOrder_no( boardVo.getOrder_no() + 1 );
+		boardVo.setDepth( boardVo.getDepth() + 1 );
 		
-		model.addAttribute( "vo", vo );
+		model.addAttribute( "boardVo", boardVo );
+		model.addAttribute( "comment", no2 );
 		
-		return "/board/write";
+		return "board/write";
 	}
 	
 	@Auth

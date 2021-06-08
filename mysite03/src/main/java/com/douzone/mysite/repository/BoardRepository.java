@@ -8,12 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
+	@Autowired
+	private SqlSession sqlSession;
+	
 	public Boolean insert(BoardVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -106,6 +111,10 @@ public class BoardRepository {
 
 		return result;
 	}
+	
+//	public BoardVo findById(Long no) {
+//		return sqlSession.selectOne( "board.findById", no );
+//	}
 
 	public BoardVo findById(Long no) {
 		BoardVo vo = new BoardVo();
@@ -231,6 +240,10 @@ public class BoardRepository {
 
 		return result;
 	}
+	
+//	public int updateHit( Long no ) {
+//		return sqlSession.update( "board.updateHit", no );
+//	}
 
 	public boolean updateHit(BoardVo vo) {
 		Connection conn = null;
@@ -265,6 +278,7 @@ public class BoardRepository {
 		}
 		return result;
 	}
+	
 
 	public boolean insertComment(BoardVo vo) {
 		Connection conn = null;

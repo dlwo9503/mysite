@@ -49,5 +49,14 @@ public class BoardService {
 		boardRepository.insertComment(boardVo);
 	}
 
-	
+	public BoardVo getContents(Long no) {
+		BoardVo boardVo = boardRepository.findById(no);
+
+		if (boardVo != null) {
+			boardRepository.updateHit(boardVo);
+		}
+
+		return boardVo;
+	}
+
 }
