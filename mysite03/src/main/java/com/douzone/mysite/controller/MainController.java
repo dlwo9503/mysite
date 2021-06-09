@@ -14,7 +14,7 @@ import com.douzone.mysite.vo.SiteVo;
 public class MainController {
 	
 	@Autowired
-	ServletContext application;
+	ServletContext application; // application scope 사용
 	
 	@Autowired
 	private SiteService siteService;
@@ -23,7 +23,7 @@ public class MainController {
 	public String main(Model model) {
 		SiteVo siteVo = siteService.findAll();
 		model.addAttribute("siteVo", siteVo);
-		application.setAttribute("title", siteVo.getTitle());
+		application.setAttribute("title", siteVo.getTitle()); // application scope 사용, 서버가 돌아가는 동안 값이 유지되고 어디서든 사용 가능
 		
 		return "main/index";
 		
