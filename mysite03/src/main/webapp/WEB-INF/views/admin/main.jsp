@@ -26,7 +26,7 @@
 						<input id="welcome" name="welcome" type="text" value="${siteVo.welcome }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${pageContext.request.contextPath }/${siteVo.profile }">
+						<img id="profile" src="${pageContext.request.contextPath }${siteVo.profile }">
 						<input type="hidden" name="profile" value="${siteVo.profile }">
 						<input type="file" name="file1">
 

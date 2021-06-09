@@ -10,6 +10,8 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<mvc:annotation-driven /> <!-- fileupload 기능추가하면서 추가함 -->
+
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
 
@@ -52,6 +54,21 @@
 		<property name="suffix" value=".jsp" /> <!-- 뒤에 붙이는거 -->
 		<!-- <property name="order" value="1" /> 여러개 사용할때만 필요, 지금은 필요없음 -->
 	</bean>
+
+	<!-- Multipard Resolver --> <!-- 멀티파트 리졸버 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" / -->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+
+	<!-- mvc resources mapping -->
+	<mvc:resources location="file:/Users/jaes/uploads-mysite/"
+		mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
 
 	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
 	<context:component-scan
