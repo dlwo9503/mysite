@@ -4,7 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div id="header">
-	<h1>MySite</h1>
+	<h1>MySite</h1> <!-- 이부분을 수정 -->
+	<!-- <h1>${site.title }</h1> 어플리케이션 scope에 저장해서 받아와야 함-->
 	<ul>
 		<c:choose>
 			<c:when test="${empty authUser }">
