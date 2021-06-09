@@ -42,6 +42,7 @@ public class AdminController {
 		} else {
 			String url = fileUploadService.restore(file1);
 			siteVo.setProfile(url);
+			siteService.updateMain(siteVo);
 			return "redirect:/admin";
 		}
 	}
