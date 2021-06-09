@@ -1,5 +1,7 @@
 package com.douzone.mysite.controller;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,10 @@ import com.douzone.mysite.vo.SiteVo;
 
 @Controller
 public class MainController {
+	
+	@Autowired
+	ServletContext application;
+	
 	@Autowired
 	private SiteService siteService;
 	
@@ -17,6 +23,8 @@ public class MainController {
 	public String main(Model model) {
 		SiteVo siteVo = siteService.findAll();
 		model.addAttribute("siteVo", siteVo);
+		application.setAttribute("title", siteVo.getTitle());
+		
 		return "main/index";
 		
 	}

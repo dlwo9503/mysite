@@ -35,10 +35,15 @@ public class AdminController {
 	public String updateMain(SiteVo siteVo,
 			@RequestParam("file1") MultipartFile file1,
 			Model model) {
-		String url = fileUploadService.restore(file1);
-		siteVo.setProfile(url);
-		siteService.updateMain(siteVo);
-		return "redirect:/admin";
+		
+		if(file1.isEmpty()) {
+			siteService.updateMain(siteVo);
+			return "redirect:/admin";
+		} else {
+			String url = fileUploadService.restore(file1);
+			siteVo.setProfile(url);
+			return "redirect:/admin";
+		}
 	}
 	
 	@RequestMapping("/guestbook")

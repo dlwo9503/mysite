@@ -5,7 +5,7 @@
 	<select id="findAll" resultType="com.douzone.mysite.vo.GuestbookVo"> <!-- id 안주면 에러뜸 -->
 		<!-- 이거안에 넣어주는게 좋음 -->
 		<![CDATA[
-			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as reg_date, message from guestbook order by reg_date desc
+			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc
 		]]>
 	</select>
 	
