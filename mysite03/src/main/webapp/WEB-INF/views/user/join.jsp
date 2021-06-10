@@ -24,15 +24,16 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 			type: "get",
 			dateType: "json",
 			error: function(xhr,status, e){
-				console.log(e);
+				console.error(status, e);
 			},
 			success: function(response){
+				console.log(response);
 				if(response.result != "success"){
-					console.log("error");
+					console.error(response.message);
 					return;
 				}
 				
-				if(response.exist){
+				if(response.data){
 					alert("이미 존재하는 이메일 입니다. 다른 이메일을 사용하세요");
 					$("#email").val(""); // 해당 id를 찾아 지우고
 					$("#email").focus(); // 해당 id를 찾아 포커싱
