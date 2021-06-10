@@ -17,6 +17,25 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+
 		<mvc:argument-resolvers>
 			<bean
 				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
@@ -67,8 +86,8 @@
 	</bean>
 
 	<!-- mvc resources mapping -->
-	<mvc:resources location="file:/Users/jaes/uploads-mysite/"
-		mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
+	<mvc:resources
+		location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
 
 	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
 	<context:component-scan
