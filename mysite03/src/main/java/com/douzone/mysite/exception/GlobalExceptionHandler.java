@@ -1,5 +1,6 @@
 package com.douzone.mysite.exception;
 
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -10,6 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.douzone.mysite.dto.JsonResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 // 이게 AOP 역할을 함 
 @ControllerAdvice
@@ -31,6 +35,14 @@ public class GlobalExceptionHandler {
 		
 		if(accept.matches(".*application/json.*")) {// .*은 모든 문자 포함한다는 뜻
 			// 3. json 응답
+			response.setStatus(HttpServletResponse.SC_OK);
+			
+			JsonResult result = JsonResult.fail(errors.toString());
+			String jsonString = new ObjectMapper().writeValueAsString(result);
+			
+			OutputStream os = response.getOutputStream();
+			os.write(jsonString.getBytes("UTF-8"));
+			os.close();
 		} else {
 			// 3. 사과 페이지 가기(정상종료)
 			request.setAttribute("exception", errors.toString()); // 모델에 exception이라는 키와 값 저장해서 보냄

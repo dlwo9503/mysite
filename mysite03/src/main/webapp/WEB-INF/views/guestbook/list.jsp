@@ -9,7 +9,9 @@
 	pageEncoding="UTF-8"%>
 <%
 	pageContext.setAttribute("newline", "\n");
+	/* pageContext.setAttribute("left", "<"); */
 %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -56,6 +58,7 @@
 							</tr>
 							<tr>
 								<td colspan=4>${fn:replace(vo.message, newline, "<br/>") }</td>
+<%-- 								<td colspan=4>${fn:replace(fn:replace(vo.message, newline, "<br/>"),left,"&lt;") }</td> --%>
 							</tr>
 						</table>
 						<br>
