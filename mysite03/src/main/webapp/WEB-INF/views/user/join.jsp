@@ -15,12 +15,29 @@
 $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 	btn = $('#btn-check'); // #을 붙여주면 id를 찾음
 	btn.click(function(){ // btn을 click하면 함수를 실행해라
+		var email = $("#email").val();
+		if(email == ""){
+			return;
+		}
 		$.ajax({
-			url: "/mysite03/user/api/checkemail?email=dlwo9503@naver.com",
+			url: "/mysite03/user/api/checkemail?email=" + email,
 			type: "get",
 			dateType: "json",
 			success: function(response){
-				console.log(response);
+				if(response.result != "success"){
+					console.log("error");
+					return;
+				}
+				
+				if(response.exist){
+					alert("이미 존재하는 이메일 입니다. 다른 이메일을 사용하세요");
+					$("#email").val(""); // 해당 id를 찾아 지우고
+					$("#email").focus(); // 해당 id를 찾아 포커싱
+					return;
+				}
+				
+				$("#btn-check").hide(); // 숨기기
+				$("#img-check").show(); // 보이기
 			}
 		});
 	});
@@ -39,10 +56,10 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 						name="name" type="text" value=""> <label
 						class="block-label" for="email">이메일</label>
 					<!-- <input id="email" name="email" type="text" value='${empty email } ? "" : ${email }'> -->
-					<input id="email" name="email" type="text" value=''> <input
-						id="btn-check" type="button" value="중복체크"> <label
-						class="block-label">패스워드</label> <input name="password"
-						type="password" value="">
+					<input id="email" name="email" type="text" value=''> 
+					<input id="btn-check" type="button" value="중복체크">
+					<img id="img-check" src="${pageContext.request.contextPath }/assets/images/check.png" style="width:18px; vertical-align:bottom; display:none"/> 
+						<label class="block-label">패스워드</label> <input name="password" type="password" value="">
 
 					<fieldset>
 						<legend>성별</legend>
