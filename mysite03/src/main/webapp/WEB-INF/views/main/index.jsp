@@ -7,17 +7,6 @@
 %>
 <!DOCTYPE html>
 <html>
-<script>
-	myObj = {
-			"no":1,
-			"name":"이재성",
-			"email":"dlwo9503@naver.com",
-			"password":null,
-			"gender":null,
-			"role":null
-			}
-	console.log(myObj.no);
-</script>
 <head>
 <title>${siteVo.title }</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">

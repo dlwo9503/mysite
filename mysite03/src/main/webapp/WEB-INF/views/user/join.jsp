@@ -8,6 +8,18 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js" type="text/javascript"></script> <!-- js 소스를 땡겨와서 이부분에서 사용할거임 -->
+<script>
+i = 10
+$(function(){ // $가 붙으면 jQuery라고 생각하면 됨
+	btn = $('#btn-check'); // #을 붙여주면 id를 찾음
+	btn.click(function(){ // btn을 click하면 함수를 실행해라
+		console.log("...");
+	});
+});
+</script>
+
 </head>
 <body>
 	<div id="container">
@@ -21,7 +33,7 @@
 					<label class="block-label" for="email">이메일</label>
 					<!-- <input id="email" name="email" type="text" value='${empty email } ? "" : ${email }'> -->
 					<input id="email" name="email" type="text" value=''>
-					<input type="button" value="중복체크">
+					<input id="btn-check" type="button" value="중복체크">
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">
