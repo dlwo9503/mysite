@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileUploadService {
-	private static final String SAVE_PATH = "/Users/jaes/uploads-mysite"; // 맥은 경로 다름
+//	private static final String SAVE_PATH = "/Users/jaes/uploads-mysite"; // 맥은 경로 다름
+	private static final String SAVE_PATH = "/uploads-mysite"; // 맥은 경로 다름
 	
 	private static final String URL_BASE = "/images";
 	
