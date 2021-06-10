@@ -23,6 +23,9 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 			url: "/mysite03/user/api/checkemail?email=" + email,
 			type: "get",
 			dateType: "json",
+			error: function(xhr,status, e){
+				console.log(e);
+			},
 			success: function(response){
 				if(response.result != "success"){
 					console.log("error");

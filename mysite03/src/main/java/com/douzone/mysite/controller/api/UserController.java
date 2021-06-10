@@ -4,21 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
-@Controller("userControllerApi") // 다른 패키지의 유저 컨트롤러와 중복을 피하기위해서 id를 지정해줌
+@RestController("userControllerApi") // 다른 패키지의 유저 컨트롤러와 중복을 피하기위해서 id를 지정해줌
 @RequestMapping("/user/api")
 public class UserController {
 	@Autowired
 	private UserService userService;
-	@ResponseBody
-	@RequestMapping("/checkemail")
+	
+//	@RequestMapping("/checkemail")
+	@GetMapping("/checkemail") // GetMapping를 사용하면 뒤에 따로 GET를 써주지 않아도 됨
 	public Object checkemail(
 			@RequestParam(value="email", required=true, defaultValue="") String email) {
 		System.out.println("------->" + email);
