@@ -87,8 +87,8 @@
 
 	<!-- mvc resources mapping -->
 	<mvc:resources
-		location="file:/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
-		<!-- location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> --> <!-- 맥은 경로 다를 수도 있음 -->
+		location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
+		<!-- location="file:/uploads-mysite/" mapping="/images/**" /> --> <!-- 맥은 경로 다를 수도 있음 -->
 
 	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
 	<context:component-scan base-package="com.douzone.mysite.controller, com.douzone.mysite.exception" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
