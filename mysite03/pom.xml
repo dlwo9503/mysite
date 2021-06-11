@@ -104,6 +104,19 @@
 			<version>2.9.8</version>
 		</dependency>
 
+		<!-- validation --> <!-- 유효성 검사를 위한 라이브러리, 버전 4.2.0 -> 6.1.0, 많이 쓰는게 ㄱㅊ -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.1.0.Final</version>
+		</dependency>
+
 		<!-- jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
