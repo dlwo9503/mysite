@@ -85,13 +85,26 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+				<!-- <value>messages/messages_jp</value> 일본말
+				<value>messages/messages_cn</value> 중국말 -->
+			</list>
+		</property>
+	</bean>
+
 	<!-- mvc resources mapping -->
 	<mvc:resources
 		location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
-		<!-- location="file:/uploads-mysite/" mapping="/images/**" /> --> <!-- 맥은 경로 다를 수도 있음 -->
+	<!-- location="file:/uploads-mysite/" mapping="/images/**" /> --> <!-- 맥은 경로 다를 수도 있음 -->
 
 	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
-	<context:component-scan base-package="com.douzone.mysite.controller, com.douzone.mysite.exception" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
+	<context:component-scan
+		base-package="com.douzone.mysite.controller, com.douzone.mysite.exception" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
 	<!-- com.douzone.mysite.controller 이라는 패키지로 가서 스캔을 한다는 의미 -->
 
 </beans>

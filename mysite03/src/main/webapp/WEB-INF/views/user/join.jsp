@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -55,14 +56,23 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-				<form id="join-form" name="joinform" method="post"
+				<%-- form 태그 사용, end 태그에도 같이 달아줘야 함 --%>
+				<form:form 
+					modelAttribute="userVo" 
+				 	id="join-form" 
+				 	name="joinform" 
+					method="post" 
 					action="${pageContext.request.contextPath }/user/join">
 					<label class="block-label" for="name">이름</label> 
-					<input id="name" name="name" type="text" value="">
+					
+					<form:input path="name" /> <!-- 밑에 줄을 자동으로 만들어줌 -->
+					<%-- <input id="name" name="name" type="text" value="${userVo.name }"> --%>
 					<p style="color:#f00; text-align:left; padding-left:0px">
 						<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('name') }">
-								<strong>${errors.getFieldError( 'name' ).defaultMessage }</strong>
+								<spring:message 
+	     							code="${errors.getFieldError( 'name' ).codes[0] }"
+	     							text="${errors.getFieldError( 'name' ).defaultMessage }" />
 							</c:if>
 						</spring:hasBindErrors>
 					</p>
@@ -72,14 +82,15 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 					<p style="color:#f00; text-align:left; padding-left:0px">
 						<spring:hasBindErrors name="userVo">
 							<c:if test="${errors.hasFieldErrors('email') }">
-								<strong>${errors.getFieldError( 'email' ).defaultMessage }</strong>
+								${errors.getFieldError( 'email' ).defaultMessage }
 							</c:if>
 						</spring:hasBindErrors>
 					</p>
 					
 					<input id="btn-check" type="button" value="중복체크">
 					<img id="img-check" src="${pageContext.request.contextPath }/assets/images/check.png" style="width:18px; vertical-align:bottom; display:none"/> 
-						<label class="block-label">패스워드</label> <input name="password" type="password" value="">
+						<label class="block-label">패스워드</label>
+						<input name="password" type="password" value="">
 
 					<fieldset>
 						<legend>성별</legend>
@@ -97,7 +108,7 @@ $(function(){ // $가 붙으면 jQuery라고 생각하면 됨
 
 					<input type="submit" value="가입하기">
 
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
