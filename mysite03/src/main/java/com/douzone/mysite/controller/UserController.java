@@ -33,7 +33,6 @@ public class UserController {
 //			for(ObjectError error : list) {
 //				System.out.println(error);
 //			}
-			model.addAttribute("userVo", vo);
 			model.addAllAttributes(result.getModel()); // All을 사용하면 map의 키와 값을 모두 넘길 수 있음
 			return "user/join";
 		}
