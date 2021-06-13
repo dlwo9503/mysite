@@ -1,14 +1,21 @@
 package com.douzone.mysite.vo;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class BoardVo {
 	private Long no;
+	@NotEmpty
+	@Length(min=2, max=30)
 	private String title;
+	@NotEmpty
+	@Length(min=10, max=200)
 	private String contents;
 	private String regDate;
-	private int hit;
-	private int group_no;
-	private int order_no;
-	private int depth;
+	private Integer hit;
+	private Integer group_no;
+	private Integer order_no;
+	private Integer depth;
 	private Long userNo;
 	private String userName;
 	public Long getNo() {
@@ -35,28 +42,28 @@ public class BoardVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public int getHit() {
+	public Integer getHit() {
 		return hit;
 	}
-	public void setHit(int hit) {
+	public void setHit(Integer hit) {
 		this.hit = hit;
 	}
-	public int getGroup_no() {
+	public Integer getGroup_no() {
 		return group_no;
 	}
-	public void setGroup_no(int group_no) {
+	public void setGroup_no(Integer group_no) {
 		this.group_no = group_no;
 	}
-	public int getOrder_no() {
+	public Integer getOrder_no() {
 		return order_no;
 	}
-	public void setOrder_no(int order_no) {
+	public void setOrder_no(Integer order_no) {
 		this.order_no = order_no;
 	}
-	public int getDepth() {
+	public Integer getDepth() {
 		return depth;
 	}
-	public void setDepth(int depth) {
+	public void setDepth(Integer depth) {
 		this.depth = depth;
 	}
 	public Long getUserNo() {

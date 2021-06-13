@@ -179,7 +179,7 @@ public class UserRepository {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver"); // 드라이버 로
-			String url = "jdbc:mysql://192.168.254.31:3307/webdb?characterEncoding=utf8"; // url 정의
+			String url = "jdbc:mysql://172.20.10.2:3307/webdb?characterEncoding=utf8"; // url 정의
 			conn = DriverManager.getConnection(url, "webdb", "webdb"); // Connection 얻기
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
