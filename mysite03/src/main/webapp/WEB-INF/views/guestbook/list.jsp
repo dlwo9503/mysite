@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <%-- <%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -8,8 +10,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	pageContext.setAttribute("newline", "\n");
-	/* pageContext.setAttribute("left", "<"); */
+pageContext.setAttribute("newline", "\n");
+/* pageContext.setAttribute("left", "<"); */
 %>
 
 <html>
@@ -26,7 +28,9 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<form action="${pageContext.request.contextPath }/guestbook/add" method="post">
+					<form:form
+						action="${pageContext.request.contextPath }/guestbook/add"
+						method="post">
 						<table border=1 width=500>
 							<tr>
 								<td>이름</td>
@@ -35,17 +39,39 @@
 								<td><input type="password" name="password"></td>
 							</tr>
 							<tr>
-								<td colspan=4><textarea name="message" cols=60 rows=5></textarea></td>
+								<td colspan=4><textarea name="message" cols=60 rows=5></textarea>
+								</td>
 							</tr>
 							<tr>
 								<td colspan=4 align=right><input type="submit" VALUE=" 등록 "></td>
 							</tr>
 						</table>
-					</form>
-					<br><br>
+						<spring:hasBindErrors name="guestbookVo">
+							<c:if test="${errors.hasFieldErrors('name') }">
+								<spring:message
+									code="${errors.getFieldError( 'name' ).codes[0] }"
+									text="${errors.getFieldError( 'name' ).defaultMessage }" />
+							</c:if>
+						</spring:hasBindErrors>
+						<spring:hasBindErrors name="guestbookVo">
+							<c:if test="${errors.hasFieldErrors('password') }">
+								<spring:message
+									code="${errors.getFieldError( 'password' ).codes[0] }"
+									text="${errors.getFieldError( 'password' ).defaultMessage }" />
+							</c:if>
+						</spring:hasBindErrors>
+						<spring:hasBindErrors name="guestbookVo">
+							<c:if test="${errors.hasFieldErrors('message') }">
+								<spring:message
+									code="${errors.getFieldError( 'message' ).codes[0] }"
+									text="${errors.getFieldError( 'message' ).defaultMessage }" />
+							</c:if>
+						</spring:hasBindErrors>
+					</form:form>
+					<br> <br>
 
 					<c:set var="index" value="0" />
-					<c:set var="count" value="${fn:length(list) }"/>
+					<c:set var="count" value="${fn:length(list) }" />
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<table width=510 border=1>
 							<tr>
@@ -58,7 +84,7 @@
 							</tr>
 							<tr>
 								<td colspan=4>${fn:replace(vo.message, newline, "<br/>") }</td>
-<%-- 								<td colspan=4>${fn:replace(fn:replace(vo.message, newline, "<br/>"),left,"&lt;") }</td> --%>
+								<%-- 								<td colspan=4>${fn:replace(fn:replace(vo.message, newline, "<br/>"),left,"&lt;") }</td> --%>
 							</tr>
 						</table>
 						<br>

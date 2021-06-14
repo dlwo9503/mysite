@@ -2,9 +2,13 @@ package com.douzone.mysite.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +42,11 @@ public class GuestbookController {
 	}
 	
 	@RequestMapping(value = "/add", method=RequestMethod.POST)
-	public String add(GuestbookVo vo) {
+	public String add(@ModelAttribute @Valid GuestbookVo vo, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAllAttributes(result.getModel()); // All을 사용하면 map의 키와 값을 모두 넘길 수 있음
+			return "guestbook/list";
+		}
 		guestbookService.addMessage(vo);
 		return "redirect:/guestbook";
 	}
