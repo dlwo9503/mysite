@@ -5,14 +5,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-// MessageSource 설정
 @Configuration
 public class MessageConfig {
+	
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("com/douzone/mysite/config/web/messages_ko");
 		messageSource.setDefaultEncoding("utf-8");
+		
 		return messageSource;
 	}
 }
