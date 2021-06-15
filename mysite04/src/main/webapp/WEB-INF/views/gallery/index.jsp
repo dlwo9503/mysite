@@ -62,7 +62,7 @@ $(function(){
 								
 							<a	href="${pageContext.request.contextPath }/gallery/delete/${vo.no}"
 								class="del-button"
-								style="background-image: url('/${pageContext.request.contextPath }/assets/images/delete-image.png')"
+								style="background-image: url('${pageContext.request.contextPath }/assets/images/delete-image.png')"
 								title="삭제">삭제</a>
 						</li>
 					</c:forEach>																																				
