@@ -51,6 +51,18 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+				<!-- <value>messages/messages_jp</value> 일본말
+				<value>messages/messages_cn</value> 중국말 -->
+			</list>
+		</property>
+	</bean>
+
 	<!-- mvc resources mapping -->
 	<mvc:resources
 		location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
