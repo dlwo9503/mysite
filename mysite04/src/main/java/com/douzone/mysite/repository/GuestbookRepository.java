@@ -15,9 +15,6 @@ public class GuestbookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Autowired
-	private DataSource dataSource;
-	
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll"); // selectList 형태로 받아옴, guestbook을 찾아서 그 안에 findAll을 실행함 (guestbook.xml)
 	}
