@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<mvc:annotation-driven /> <!-- fileupload 기능추가하면서 추가함 -->
+
+	<!-- auto proxy -->
+	<aop:aspectj-autoproxy />
+
+	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+
+		<mvc:argument-resolvers>
+			<bean
+				class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
+	<mvc:default-servlet-handler />
+
+	<!-- Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/auth" />
+			<bean class="com.douzone.mysite.security.LoginInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.douzone.mysite.security.LogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" /> <!-- 모든 경로 확인, 로그인, 로그아웃은 위에서 처리하기때문에 안해줘도 됨 -->
+			<mvc:exclude-mapping path="/user/auth" /> <!-- 이거 3개 빼고 어노테이션 검사를 하게 됨 -->
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="com.douzone.mysite.security.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- ViewResolver 설정 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" /> <!-- 하나만 쓸때는 이렇게, 여러개를 쓸때는 리스트를 만들어 세팅 -->
+		<property name="prefix" value="/WEB-INF/views/" /> <!-- 앞에 붙이는거 -->
+		<property name="suffix" value=".jsp" /> <!-- 뒤에 붙이는거 -->
+		<!-- <property name="order" value="1" /> 여러개 사용할때만 필요, 지금은 필요없음 -->
+	</bean>
+
+	<!-- Multipard Resolver --> <!-- 멀티파트 리졸버 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" / -->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+				<!-- <value>messages/messages_jp</value> 일본말
+				<value>messages/messages_cn</value> 중국말 -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- mvc resources mapping -->
+	<mvc:resources
+		location="file:/Users/jaes/uploads-mysite/" mapping="/images/**" /> <!-- 맥은 경로 다를 수도 있음 -->
+	<!-- location="file:/uploads-mysite/" mapping="/images/**" /> --> <!-- 맥은 경로 다를 수도 있음 -->
+
+	<context:annotation-config /> <!-- 이거 하나가 매핑과 컨트롤러를 다 자동으로 해줌 -->
+	<context:component-scan
+		base-package="com.douzone.mysite.controller, com.douzone.mysite.exception" /> <!-- 이거랑 패키지 이름이랑 동일해야 함 -->
+	<!-- com.douzone.mysite.controller 이라는 패키지로 가서 스캔을 한다는 의미 -->
+
+</beans>
