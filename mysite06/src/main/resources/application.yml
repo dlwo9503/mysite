@@ -53,7 +53,7 @@ spring:
    # datasource
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mysql://192.168.254.31:3307/webdb?characterEncoding=utf8
+      url: jdbc:mysql://192.168.254.65:3307/webdb?characterEncoding=utf8
       username: webdb
       password: webdb
       initialSize: 10
