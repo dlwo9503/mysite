@@ -9,6 +9,13 @@
 		]]>
 	</select>
 	
+	<select id="findAllByNo" resultType="com.douzone.mysite.vo.GuestbookVo"> <!-- id 안주면 에러뜸 -->
+		<!-- 이거안에 넣어주는게 좋음 -->
+		<![CDATA[
+			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook where no < #{no } order by reg_date desc
+		]]>
+	</select>
+	
  	<select id="findAll2" parameterType="long" resultType="guestbookvo">
 		<![CDATA[
 			select no, password from guestbook where no=#{no }

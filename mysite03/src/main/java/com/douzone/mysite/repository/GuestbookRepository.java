@@ -22,6 +22,10 @@ public class GuestbookRepository {
 		return sqlSession.selectList("guestbook.findAll"); // selectList 형태로 받아옴, guestbook을 찾아서 그 안에 findAll을 실행함 (guestbook.xml)
 	}
 	
+	public List<GuestbookVo> findAll(Long no) {
+		return sqlSession.selectList("guestbook.findAllByNo", no); // selectList 형태로 받아옴, guestbook을 찾아서 그 안에 findAll을 실행함 (guestbook.xml)
+	}
+	
 	public boolean insert(GuestbookVo vo) {
 		int count = sqlSession.insert("guestbook.insert", vo); // count = insert 된 수
 		return count == 1;
