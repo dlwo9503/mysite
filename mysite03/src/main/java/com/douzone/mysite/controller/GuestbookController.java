@@ -51,9 +51,8 @@ public class GuestbookController {
 		return "redirect:/guestbook";
 	}
 	
-//	@ExceptionHandler(Exception.class) // 예외를 잡음
-//	public String handlerException() {
-//		// 1. logging
-//		return "error/exception"; // 2. 사과 page 이동.. sorry..~~
-//	}
+	@RequestMapping("/spa")
+	public String spaLanding() {
+		return "guestbook/spa-landing";
+	}
 }
