@@ -12,19 +12,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-/* guestbook application based on jQuery */
+/******** guestbook application based on jQuery */
 /*
 과제 ex1: 리스트
-- no 기준의 리스트를 부분적(3개씩) 가져와서 랜더링 order by, no가 작은순으로 가져옴
-- 버튼 이벤트로 구현 -> 스크롤 이벤트 바꾼다.
-- no 기준으로 동적 쿼리를 레포지토리에 구현한다.
-- 참고 : /ch08/test/gb/ex1 여기 들어가면 보여줌
 */
-$(function(){
-        $("#btn-fetch").click(function(){
-            console.log("!");
-        })
-    })
 </script>
 </head>
 <body>
