@@ -2,17 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
-	<select id="findAll" resultType="com.douzone.mysite.vo.GuestbookVo"> <!-- id 안주면 에러뜸 -->
+	<select id="findAll" resultType="guestbookvo"> <!-- id 안주면 에러뜸 -->
 		<!-- 이거안에 넣어주는게 좋음 -->
 		<![CDATA[
 			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook order by reg_date desc
 		]]>
 	</select>
 	
-	<select id="findAllByNo" resultType="com.douzone.mysite.vo.GuestbookVo"> <!-- id 안주면 에러뜸 -->
+	<select id="findAllByNo" parameterType="long" resultType="guestbookvo"> <!-- id 안주면 에러뜸 -->
 		<!-- 이거안에 넣어주는게 좋음 -->
 		<![CDATA[
-			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook where no < #{no } order by reg_date desc
+			select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s') as regDate, message from guestbook 
+		]]>
+		<choose>
+			<when test="_parameter > 0">
+				<![CDATA[
+			  		where no < #{_parameter }			
+				]]>
+			</when>
+		</choose>
+		<![CDATA[
+		order by reg_date desc limit 0, 3
 		]]>
 	</select>
 	

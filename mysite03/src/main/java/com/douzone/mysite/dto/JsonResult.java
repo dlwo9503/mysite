@@ -1,6 +1,7 @@
 package com.douzone.mysite.dto;
 
 public class JsonResult {
+	
 	private String result; // "success" or "fail" 
 	private Object data; // if(success) date set / else null
 	private String message; // if(fail) messgae set

@@ -21,15 +21,17 @@ public class GuestbookService {
 		return guestbookRepository.findAll(no);
 	}
 	
-	public void deleteMessage(Long no, String password) {
-//		GuestbookVo vo = new GuestbookVo();
-//		vo.setNo(no);
-//		vo.setPassword(password);
+	public boolean deleteMessage(Long no, String password) {
+		GuestbookVo vo = new GuestbookVo();
+		vo.setNo(no);
+		vo.setPassword(password);
+		return guestbookRepository.delete(vo);
 		
-		GuestbookVo vo1 = guestbookRepository.findAll2(no);
-		if(vo1.getPassword().equals(password)){
-			guestbookRepository.delete(vo1);
-		}
+		
+//		GuestbookVo vo1 = guestbookRepository.findAll2(no);
+//		if(vo1.getPassword().equals(password)){
+//			guestbookRepository.delete(vo1);
+//		}
 	}
 	
 	public void addMessage(GuestbookVo vo) {

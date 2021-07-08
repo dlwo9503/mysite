@@ -19,7 +19,7 @@ public class UserController {
 //	@RequestMapping("/checkemail")
 	@GetMapping("/checkemail") // GetMapping를 사용하면 뒤에 따로 GET를 써주지 않아도 됨
 	public JsonResult checkemail(
-			@RequestParam(value="email", required=true, defaultValue="") String email) {
+		@RequestParam(value="email", required=true, defaultValue="") String email) {
 		UserVo userVo = userService.getUser(email);
 		return JsonResult.success(userVo != null);
 	}
