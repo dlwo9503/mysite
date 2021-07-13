@@ -197,9 +197,9 @@ $(function(){
 				
 				<ul id="list-guestbook"></ul>
 				
-				<!-- <div style="margin:20px 0 0 0">
+				<div style="margin:20px 0 0 0">
 					<button id="btn-fetch">다음 가져오기</button>
-				</div> -->
+				</div>
 			</div>
 			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
   				<p class="validateTips normal">작성시 입력했던 비밀번호를 입력하세요.</p>
